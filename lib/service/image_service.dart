@@ -7,12 +7,8 @@ class ImageService {
   Future<List<ImageModel>> fetchImages() async {
     try {
       final Response response = await _dio.get(
-        'https://picsum.photos/v2/list?page=1&limit=20',
+        'https://picsum.photos/v2/list?page=1&limit=18',
       );
-
-      // 🔍 DEBUG
-      print('STATUS CODE: ${response.statusCode}');
-      print('RESPONSE TYPE: ${response.data.runtimeType}');
 
       if (response.statusCode == 200) {
         final List data = response.data;

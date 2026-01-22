@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:aifer_edu/model/image_model.dart';
 
-class ImageCard extends StatelessWidget {
-  final dynamic image;
+class TopImageSlider extends StatelessWidget {
+  final ImageModel image;
 
-  const ImageCard({super.key, required this.image});
+  const TopImageSlider({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 6,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    return SizedBox(
+      height: 220,
+      width: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Stack(
@@ -33,10 +26,9 @@ class ImageCard extends StatelessWidget {
               errorBuilder: (_, __, ___) =>
                   const Icon(Icons.broken_image, size: 40),
             ),
-
             Container(
               alignment: Alignment.bottomLeft,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.transparent, Colors.black54],
@@ -46,11 +38,10 @@ class ImageCard extends StatelessWidget {
               ),
               child: Text(
                 image.author,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),

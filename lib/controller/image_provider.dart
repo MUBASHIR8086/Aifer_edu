@@ -1,6 +1,6 @@
+import 'package:aifer_edu/model/image_model.dart';
+import 'package:aifer_edu/service/image_service.dart';
 import 'package:flutter/material.dart';
-import '../model/image_model.dart';
-import '../service/image_service.dart';
 
 class GalleryProvider extends ChangeNotifier {
   final ImageService service = ImageService();
@@ -11,11 +11,12 @@ class GalleryProvider extends ChangeNotifier {
 
   Future<void> loadImages() async {
     isLoading = true;
-
     notifyListeners();
 
     try {
-      images = await service.fetchImages();
+      final fetchedImages = await service.fetchImages();
+
+      images = fetchedImages.reversed.toList();
     } catch (e) {
       error = e.toString();
     }

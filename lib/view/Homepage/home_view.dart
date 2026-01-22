@@ -1,6 +1,7 @@
 import 'package:aifer_edu/controller/image_provider.dart';
 import 'package:aifer_edu/view/widget/error_widgect.dart';
 import 'package:aifer_edu/view/widget/grid_widgect.dart';
+import 'package:aifer_edu/view/widget/slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<GalleryProvider>(context, listen: false).loadImages();
+      context.read<GalleryProvider>().loadImages();
     });
   }
 
@@ -24,10 +25,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gallery", style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.blue,
+        title: Text(
+          "Gallery",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         centerTitle: true,
-        elevation: 0,
       ),
       body: Consumer<GalleryProvider>(
         builder: (context, provider, child) {
@@ -39,7 +42,20 @@ class _HomePageState extends State<HomePage> {
             return Errormessage(provider.error);
           }
 
-          return Grid(provider);
+          if (provider.images.isEmpty) {
+            return const Center(child: Text("No images found"));
+          }
+
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: TopImageSlider(image: provider.images.first),
+              ),
+
+              Expanded(child: Grid(provider)),
+            ],
+          );
         },
       ),
     );
